@@ -1,0 +1,38 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class MovingAnimation extends JPanel {
+    private int x = 0;
+    private int y = 0;
+
+    public MovingAnimation() {
+        Timer timer = new Timer(50, e -> {
+            x += 5; // Perubahan posisi x setiap kali timer dipicu
+            if (x > getWidth()) {
+                x = 0; // Kembali ke posisi awal jika sudah melebihi lebar panel
+            }
+            repaint(); // Memanggil repaint untuk menggambar ulang panel
+        });
+        timer.start(); // Memulai timer
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.RED);
+        g2d.fillOval(x, y, 50, 50); // Menggambar lingkaran pada posisi x, y
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Moving Animation");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 400);
+        frame.setLocationRelativeTo(null);
+
+        MovingAnimation movingAnimation = new MovingAnimation();
+        frame.add(movingAnimation);
+
+        frame.setVisible(true);
+    }
+}
